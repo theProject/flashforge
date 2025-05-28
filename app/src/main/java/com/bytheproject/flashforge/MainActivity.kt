@@ -1,5 +1,5 @@
 // MainActivity.kt
-package com.bytheproject.FlashForge
+package com.bytheproject.flashforge
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import com.bytheproject.flashforge.ui.theme.AppTheme
 
 // ============================================================================
 // DATA CLASSES
@@ -203,7 +204,7 @@ class MainActivity : ComponentActivity() {
 // MAIN APP COMPOSABLE
 // ============================================================================
 
-@OptIn(ExperimentalMaterial3Api::class)
+//@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlashForgeApp(viewModel: FlashForgeViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
@@ -309,7 +310,7 @@ fun NavigationRailComponent(
 ) {
     val navItems = listOf(
         NavItem("Study", Icons.Filled.Home),
-        NavItem("My Decks", Icons.Filled.LibraryBooks),
+        NavItem("My Decks", Icons.Filled.Dashboard),
         NavItem("Create", Icons.Filled.AddCircle),
         NavItem("Browse", Icons.Filled.Search),
         NavItem("Analytics", Icons.Filled.Analytics),
@@ -448,7 +449,7 @@ fun FlameToggleButton(onClick: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+//@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationRailItem(
     item: NavItem,
@@ -567,7 +568,7 @@ fun ThemeToggleButton(
 // TOP NAVIGATION BAR
 // ============================================================================
 
-@OptIn(ExperimentalMaterial3Api::class)
+//@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopNavigationBar(
     selectedActionIndex: Int,

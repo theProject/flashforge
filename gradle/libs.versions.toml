@@ -1,94 +1,81 @@
-# gradle/libs.versions.toml
-
 [versions]
-# Build Tools & Core (using your specified versions)
-agp = "8.10.0"
-kotlin = "2.1.20"               # Used for Kotlin Android and Compose Compiler plugin
-ksp = "2.1.20-2.0.1"            # Aligned with Kotlin version
+# Build Tools & Core
+agp = "8.10.0"                    # Stable AGP
+kotlin = "2.1.20"                # Kotlin 2.x with integrated Compose compiler
+ksp = "2.1.20-2.0.1"             # Aligned with Kotlin
 
 # M3 Expressive Experimentation
-material3Android = "1.4.0-alpha15"
-materialIconsExtended = "1.7.9"
+material3 = "1.4.0-alpha15"      # For expressive components
+materialIconsExtended = "1.7.8"  # Latest stable, confirmed
 
-
-
-# AndroidX Core & Lifecycle (using your specified versions)
+# AndroidX Core & Lifecycle
 coreKtx = "1.16.0"
 lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
-# Version for lifecycle-viewmodel-compose, using your androidx-lifecycle-compose as a base
 lifecycleViewModelCompose = "2.9.0"
 
-# Jetpack Compose (using your specified versions)
-composeBom = "2025.05.21"
-# Version for navigation-compose, using your androidx-navigation as a base
+# Jetpack Compose
+composeBom = "2025.05.01"
 navigationCompose = "2.9.0"
 
 # UI & Image Loading
-# Material3 version for androidx.compose.material3:material3 will be managed by composeBom.
-# Removed 'android-material3' version as it's likely for the View system's Material Components.
-coil = "2.6.0"                  # For image loading (you can update to latest stable if needed)
+coil = "2.6.0"
 
 # Database (for later)
 room = "2.7.1"
 
-# Testing (using your specified versions)
+# Testing
 junit = "4.13.2"
-androidxTestExtJunit = "1.2.1"    # Your junitVersion for androidx.test.ext:junit
+androidxTestExtJunit = "1.2.1"
 espressoCore = "3.6.1"
 
-# Gradle Plugins (for utility - using your specified versions)
-gradle-versions-plugin = "0.52.0"         # Your gradle-versions
-version-catalog-update-plugin = "1.0.0"    # Your version-catalog-update
+# Gradle Plugins
+gradle-versions-plugin = "0.52.0"
+version-catalog-update-plugin = "1.0.0"
 
 [libraries]
-# AndroidX Core & Lifecycle (using your preferred alias style)
+# AndroidX Core & Lifecycle
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewModelCompose" }
 
-# Jetpack Compose - BOM (Bill of Materials)
+# Jetpack Compose - BOM
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-# Individual Compose artifacts (using your preferred alias style - versions from BOM)
+# Individual Compose artifacts (versions from BOM unless overridden)
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" } # For @Preview
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" } # For M3 components (version from BOM)
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" } # Explicit alpha
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
-# M3 Expressive Experimentation (lib)
-androidx-material3-expressive = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
-androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.9" }
-
+# M3 Expressive Experimentation
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3" }
+androidx-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3" } # Renamed alias
+androidx-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite", version.ref = "material3" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconsExtended" }
 
 # Image Loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
-# Room (Database - only prepped so its ready)
+# Room (Database - kept commented)
 # androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 # androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-# androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" } # For KSP
+# androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExtJunit" } # Alias you had
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExtJunit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-# Compose Testing (versions managed by BOM - using your preferred alias style)
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" } # For previews and certain tests
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
-
 [plugins]
-# Kotlin 2x migrated
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-# Kept one Compose Compiler plugin alias, as per your successful setup structure
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-
-# Utility Gradle Plugins
 gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradle-versions-plugin" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update-plugin" }

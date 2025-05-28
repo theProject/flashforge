@@ -61,7 +61,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // M3 Expressive Add-on (alpha should stay up to snuff)
-    implementation(libs.androidx.material3.expressive)
+    //implementation(libs.androidx.material3.expressive)
 
 
     // Material Icons
