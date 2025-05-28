@@ -6,6 +6,12 @@ agp = "8.10.0"
 kotlin = "2.1.20"               # Used for Kotlin Android and Compose Compiler plugin
 ksp = "2.1.20-2.0.1"            # Aligned with Kotlin version
 
+# M3 Expressive Experimentation
+material3Android = "1.4.0-alpha15"
+materialIconsExtended = "1.7.9"
+
+
+
 # AndroidX Core & Lifecycle (using your specified versions)
 coreKtx = "1.16.0"
 lifecycleRuntimeKtx = "2.9.0"
@@ -51,15 +57,20 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" } # For M3 components (version from BOM)
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
+# M3 Expressive Experimentation (lib)
+androidx-material3-expressive = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.9" }
+
+
 # Image Loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
-# Room (Database - for when you're ready)
+# Room (Database - only prepped so its ready)
 # androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 # androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 # androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" } # For KSP
 
-# Testing (using your preferred alias style)
+# Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExtJunit" } # Alias you had
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -70,7 +81,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 
 
 [plugins]
-# Using your original plugin alias style
+# Kotlin 2x migrated
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 # Kept one Compose Compiler plugin alias, as per your successful setup structure
@@ -78,6 +89,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 
-# Utility Gradle Plugins (using your original alias style)
+# Utility Gradle Plugins
 gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradle-versions-plugin" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update-plugin" }
