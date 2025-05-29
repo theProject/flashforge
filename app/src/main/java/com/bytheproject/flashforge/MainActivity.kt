@@ -193,8 +193,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppTheme {
-                FlashForgeApp()
+            // Instantiate ViewModel at the root so we can access isDarkTheme
+            val viewModel: FlashForgeViewModel = viewModel()
+            val uiState by viewModel.uiState.collectAsState()
+
+            // Pass dynamic theme state into AppTheme
+            AppTheme(isDarkTheme = uiState.isDarkTheme) {
+                FlashForgeApp(viewModel)
             }
         }
     }
@@ -255,6 +260,7 @@ fun FlashForgeApp(viewModel: FlashForgeViewModel = viewModel()) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
+                        .weight(1f)
                         .padding(horizontal = 24.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp),
                     contentPadding = PaddingValues(vertical = 24.dp)
@@ -379,7 +385,7 @@ fun NavigationRailComponent(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 12.dp),
+                    .padding(vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 navItems.forEachIndexed { index, item ->
@@ -390,14 +396,12 @@ fun NavigationRailComponent(
                         onClick = { onNavItemClick(index) }
                     )
                 }
+                ThemeToggleButton(
+                    isDarkTheme = isDarkTheme,
+                    isCollapsed = isCollapsed,
+                    onClick = onThemeToggle
+                )
             }
-
-            // Theme Toggle
-            ThemeToggleButton(
-                isDarkTheme = isDarkTheme,
-                isCollapsed = isCollapsed,
-                onClick = onThemeToggle
-            )
         }
     }
 }
@@ -892,7 +896,9 @@ fun ProgressSection(
             // Stats Grid
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 300.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
@@ -1024,43 +1030,52 @@ fun QuickActionsSection(
     onOpenDecks: () -> Unit,
     onAiGenerate: () -> Unit
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 280.dp),
-        horizontalArrangement = Arrangement.spacedBy(20.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+    Box( // ⬅️ gives it a fixed height if inside scroll
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 200.dp, max = 600.dp) // tweak this range as needed
+            .padding(horizontal = 16.dp)
     ) {
-        item {
-            QuickActionCard(
-                title = "Create New Deck",
-                subtitle = "Build custom Kotlin flash cards",
-                icon = Icons.Filled.AddBox,
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                onClick = onCreateDeck
-            )
-        }
-        item {
-            QuickActionCard(
-                title = "My Decks",
-                subtitle = "12 decks available",
-                icon = Icons.Filled.FolderOpen,
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                onClick = onOpenDecks
-            )
-        }
-        item {
-            QuickActionCard(
-                title = "AI Generate",
-                subtitle = "Create Kotlin cards with AI",
-                icon = Icons.Filled.AutoAwesome,
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                onClick = onAiGenerate
-            )
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 280.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            modifier = Modifier.fillMaxSize() // ⬅️ ensures grid fills the Box
+        ) {
+            item {
+                QuickActionCard(
+                    title = "Create New Deck",
+                    subtitle = "Build custom Kotlin flash cards",
+                    icon = Icons.Filled.AddBox,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    onClick = onCreateDeck
+                )
+            }
+            item {
+                QuickActionCard(
+                    title = "My Decks",
+                    subtitle = "12 decks available",
+                    icon = Icons.Filled.FolderOpen,
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    onClick = onOpenDecks
+                )
+            }
+            item {
+                QuickActionCard(
+                    title = "AI Generate",
+                    subtitle = "Create Kotlin cards with AI",
+                    icon = Icons.Filled.AutoAwesome,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    onClick = onAiGenerate
+                )
+            }
         }
     }
 }
+
 
 @Composable
 fun QuickActionCard(

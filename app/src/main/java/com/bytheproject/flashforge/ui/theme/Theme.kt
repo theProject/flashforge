@@ -98,8 +98,8 @@ fun AppTheme(
             val context = LocalContext.current
             if (isDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        isDarkTheme -> darkColorScheme
-        else -> lightColorScheme
+        isDarkTheme -> darkColorScheme()
+        else -> lightColorScheme()
     }
 
     MaterialTheme(
